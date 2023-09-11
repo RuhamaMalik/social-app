@@ -12,51 +12,44 @@ const Signup = () => {
         </div>
 
         <div className={styles.form}>
-          <h1>Create your Social World Account</h1>
-          <p>Personal Information</p>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
+          <div className={styles.head}>
+            <h1>Create your Social World Account</h1>
+            <p>Personal Information</p>
           </div>
 
           <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
+            <div className={styles.input}>
+              <p>First Name</p>
+              <input type="text" placeholder='Your first name'/>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
+              <p>Title</p>
+              <input type="text" placeholder='Your title'/>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
+              <p>Your Mobile Number</p>
+              <input type="number" placeholder='+92'/>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
+              <p>Set Password</p>
+              <input type="password" placeholder='Password'/>
+            </div>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
-          </div>
+            <div className={styles.input}>
+              <p>Last Name</p>
+              <input type="text" placeholder='Your last name'/>
 
-          <div className={styles.inputs}>
-            <p>First Name</p>
-            <input type="text" />
+              <p>Username</p>
+              <input type="text" placeholder='Enter username'/>
+
+              <p>Email Address</p>
+              <input type="email" placeholder='Enter your email'/>
+
+              <p>Confirm Password</p>
+              <input type="password" placeholder='Confirm Password'/>
+            </div>
           </div>
 
 
-          
         </div>
 
       </div>
