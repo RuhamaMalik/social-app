@@ -1,0 +1,26 @@
+.headerContainer, .icons{
+   
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.headerContainer{
+    height: 50px;
+    width: 100vw;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding:0 5% 0 2%;
+    letter-spacing: 1px;
+}
+.headerContainer span{
+    color: rgb(6, 165, 90);
+}
+.icons{
+    width: 5.5em;
+
+}
+
+.icons img{
+    width: 1.5em;
+    cursor: pointer;
+}
