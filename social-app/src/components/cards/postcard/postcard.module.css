@@ -1,5 +1,6 @@
 .cardWrapper {
-    width: 36em;
+    /* width: 36em; */
+    width: 75%;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     display: grid;
     grid-template-rows: 4em 1fr 4em;
@@ -11,7 +12,8 @@
     min-height: 100%;
     min-width: 100%;
 }
-.cardFooter, 
+
+.cardFooter,
 .icons {
     display: grid;
     align-items: center;
@@ -24,10 +26,11 @@
 }
 
 .cardContent,
- .descriptiion {
+.descriptiion {
     max-height: auto;
 }
-    /* Post Card Header */
+
+/* Post Card Header */
 
 .cardHeader {
     display: flex;
@@ -43,7 +46,8 @@
 }
 
 .userData {
-    width: 32%;
+    /* width: 32%; */
+    width: 11em;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,11 +62,15 @@
 }
 
 /*  Post Card Content Section */
+.cardConten {
+    width: 100%;
+}
 
 .descriptiion {
     background-color: white;
     padding: 0 1em .5em 1em;
     min-height: 2em;
+    text-align: justify;
 }
 
 .postImg {
@@ -84,9 +92,26 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
-.icons{
-    grid-template-columns: repeat(2,1fr);
+.icons {
+    grid-template-columns: 20% 80%;
 }
-.icons:hover{
+
+.icons:hover {
     filter: drop-shadow(10px 14px 40px rgb(162, 228, 142)) invert(70%);
+}
+
+
+@media (max-width : 1010px) {
+    .cardWrapper{
+        width: 88%;
+
+    }
+}
+@media (max-width : 600px) {
+
+   
+
+    .cardWrapper {
+        width: 96%;
+    }
 }

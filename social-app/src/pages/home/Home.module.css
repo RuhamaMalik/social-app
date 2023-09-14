@@ -1,3 +1,10 @@
+.homeBar{
+    height: 2em;
+    width: 100%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+margin-top: .5em;
+}
+
 .layout {
     width: 100%;
     height: 100vh;
@@ -49,10 +56,6 @@
     color: white;
 }
 
-/* .friends {
-    background: #e7dddd;
-    
-} */
 .friends h4 {
     color: rgb(194, 186, 186);
     margin: 1.2em;
@@ -61,12 +64,88 @@
 
 .content {
     display: grid;
-    grid-gap: 2em;
+    grid-row-gap: 2em;
     justify-items: center;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.addPost {
+    margin-top: 2em;
+    padding: .6em 1em;
+    border-radius: 5px;
+    height: 5em;
+    width: 75%;
+    display: grid;
+    align-items: center;
+    /* grid-template-columns: repeat(2, ifr); */
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.textField {
+    /* width: 1; */
+    border-bottom: 1px solid rgba(173, 171, 171, 0.87);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding-bottom: .4em;
+    cursor: pointer;
+}
+
+.textField img {
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
 }
 
 
-@media (max-width : 1020px) {
-    /* .friends {} */
+@media (max-width : 1115px) {
+    .layout {
+        grid-template-columns: 12em 2fr 14em;
+    }
+
+}
+
+@media (max-width : 900px) {
+
+    .friends {
+        display: none;
+    }
+
+
+    .layout {
+        grid-template-columns: 13em 1fr;
+
+    }
+}
+
+@media (max-width : 720px) {
+
+    .layout {
+        /* grid-template-columns: 13em 30em; */
+        grid-template-columns: 1fr;
+
+    }
+
+    .addPost {
+        /* width: 27em; */
+    }
+
+    .tabs {
+        display: none;
+
+    }
+
+    .tabs .active {
+        display: block;
+    }
+}
+
+@media (max-width : 600px) {
+
+
+
+    .addPost {
+        width: 96%;
+    }
 }
