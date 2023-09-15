@@ -1,7 +1,6 @@
 import styles from './Signup.module.css';
 import signUp from '../../assets/images/signUp.svg';
 import defaultProfImg from '../../assets/images/user.jpg'
-import { Button } from '@mui/material';
 import { useState } from 'react';
 
 const Signup = () => {

@@ -1,8 +1,14 @@
-.homeBar{
-    height: 2em;
+.homeBar {
     width: 100%;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-margin-top: .5em;
+    margin-top: .5em;
+    padding-left: .3em;
+    display: none;
+}
+
+.homeBar p {
+    font-size: 1.8em;
+    cursor: pointer;
 }
 
 .layout {
@@ -127,17 +133,22 @@ margin-top: .5em;
 
     }
 
-    .addPost {
-        /* width: 27em; */
-    }
-
     .tabs {
         display: none;
 
     }
 
-    .tabs .active {
+    .homeBar {
         display: block;
+    }
+
+    .show {
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1.8em;
+
     }
 }
 

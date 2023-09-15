@@ -25,3 +25,25 @@ html{
 img, svg{
   cursor: pointer;
 }
+
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  width: .5em; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b8b6b6; 
+  border-radius: 6px; 
+}
+
+/* On hover, the thumb color */
+::-webkit-scrollbar-thumb:hover {
+  background: #777676;
+}
