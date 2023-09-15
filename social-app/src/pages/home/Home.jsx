@@ -4,7 +4,9 @@ import Header from '../../components/header/Header';
 import { NavLink } from 'react-router-dom';
 import PostCard from '../../components/cards/postcard/PostCard';
 import profileImg from '../../assets/images/profile.jpg';
-// import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useState } from 'react';
+import Modal from '../../components/modal/Modal';
 
 const Home = () => {
 
@@ -15,10 +17,29 @@ const Home = () => {
     setSearchParams(searchParams);
   };
 
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleModalShake = (e) => {
+    if (isModalOpen) {
+      document.querySelector('.modal').classList.add('shake');
+      setTimeout(() => {
+        document.querySelector('.modal').classList.remove('shake');
+      }, 500);
+    }
+  };
+
   return (
     <>
       <Header />
-      {/* <div className={styles.homeBar}>{MenuIcon}</div> */}
+      <div className={styles.homeBar}><MenuIcon /></div>
       <div className={styles.layout}>
 
         <div className={styles.tabs}> {/* Side Navigation Bar / child 1*/}
@@ -37,36 +58,13 @@ const Home = () => {
             currentTab === "0" ? (
 
               <>
-                <div className={styles.addPost} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  <div className={styles.textField} >
+                <div className={styles.addPost}>
+                  <div className={styles.textField} onClick={handleOpenModal} >
                     <img src={profileImg} alt="profileImg" />
                     <div>What's on your mind?</div>
                   </div>
-                  {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Launch demo modal
-                </button> */}
-                  {/* <div className={styles.icons}></div> */}
+                  <Modal isOpen={isModalOpen} onClose={handleCloseModal} onShake={handleModalShake} />
                 </div>
-
-                {/* Modal start */}
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class={`modal-dialog d-flex align-items-center ${styles.postModal}`}>
-                    <div class={`modal-content ${styles.h}`}>
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ...
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Modal End */}
 
                 <PostCard />
                 <PostCard />

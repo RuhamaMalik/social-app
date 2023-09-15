@@ -29,13 +29,19 @@
 .descriptiion {
     max-height: auto;
 }
-
-/* Post Card Header */
-
-.cardHeader {
+.cardHeader, .userData{
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+}
+
+.cardConten, .postImg img{
+    width: 100%;
+}
+/* Post Card Header */
+
+.cardHeader {
     padding: 1em;
 }
 
@@ -48,9 +54,6 @@
 .userData {
     /* width: 32%; */
     width: 11em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .userData p>img {
@@ -62,9 +65,6 @@
 }
 
 /*  Post Card Content Section */
-.cardConten {
-    width: 100%;
-}
 
 .descriptiion {
     background-color: white;
@@ -80,7 +80,6 @@
 
 .postImg img {
     height: 30em;
-    width: 100%;
 }
 
 .descriptiion span {
