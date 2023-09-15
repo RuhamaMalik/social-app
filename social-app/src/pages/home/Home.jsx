@@ -8,8 +8,13 @@ import { useEffect, useRef, useState } from 'react';
 import Modal from '../../components/modal/Modal';
 
 const Home = () => {
+  const [posts, setPosts] = useState([]); //postData
+  const addPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
+  console.log(posts);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();  // set Side Tabs content
   const currentTab = searchParams.get("tab") || "0";
   const changeTab = (tab) => {
     searchParams.set("tab", tab);
@@ -23,7 +28,7 @@ const Home = () => {
 
   const toggleTabs = () => {
     setShowTabs(!showTabs);
-    
+
     if (tabsRef.current) {
       tabsRef.current.classList.add('show');
     }
@@ -51,21 +56,20 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className={styles.homeBar}  onClick={toggleTabs}><p>&#x2630;</p></div>
+      <div className={styles.homeBar}><span onClick={toggleTabs}>&#x2630;</span></div>
 
       <div className={styles.layout}>
-      
-        {/* <div className={styles.tabs}>  */}
+
         {/* Side Navigation Bar / child 1*/}
         <div ref={tabsRef} className={`${styles.tabs} ${showTabs ? styles.show : ''}`}>
-          <NavLink className={`${styles.link} ${currentTab === "0" ? styles.activeLink : ""}`} onClick={() => {changeTab("0")}} > Home </NavLink>
+          <NavLink className={`${styles.link} ${currentTab === "0" ? styles.activeLink : ""}`} onClick={() => { changeTab("0") }} > Home </NavLink>
           <NavLink className={`${styles.link} ${currentTab === "1" ? styles.activeLink : ""}`} onClick={() => changeTab("1")}> Friends</NavLink>
           <NavLink className={`${styles.link} ${currentTab === "2" ? styles.activeLink : ""}`} onClick={() => changeTab("2")}> Photos</NavLink>
           <NavLink className={`${styles.link} ${currentTab === "3" ? styles.activeLink : ""}`} onClick={() => changeTab("3")}> Videos</NavLink>
           <NavLink className={`${styles.link} ${currentTab === "4" ? styles.activeLink : ""}`} onClick={() => changeTab("4")}> Marketplace</NavLink>
           <NavLink className={`${styles.link} ${currentTab === "5" ? styles.activeLink : ""}`} onClick={() => changeTab("5")}> Feeds</NavLink>
-          </div>
-          
+        </div>
+
 
         <div className={styles.content}> {/* Content / child 2*/}
 
@@ -79,12 +83,15 @@ const Home = () => {
                     <img src={profileImg} alt="profileImg" />
                     <div>What's on your mind?</div>
                   </div>
-                  <Modal isOpen={isModalOpen} onClose={handleCloseModal} onShake={handleModalShake} />
+                  <Modal onFormSubmit={addPost} isOpen={isModalOpen} onClose={handleCloseModal} onShake={handleModalShake} />
                 </div>
+                {posts.map((post, index) => (
+                  <PostCard key={index} postData={post} />
+                ))}
 
+                {/* <PostCard />
                 <PostCard />
-                <PostCard />
-                <PostCard />
+                <PostCard /> */}
               </>
             ) : currentTab === "1" ? (
               <><h1>Friends</h1></>

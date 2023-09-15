@@ -5,12 +5,13 @@ import publicIcon from '../../../assets/images/public.png';
 import likeIcon from '../../../assets/images/likeIcon.png';
 import commentIcon from '../../../assets/images/commentIcon.png';
 import { useState } from 'react';
-const PostCard = () => {
+const PostCard = ({ postData }) => {
+    const { description, image, status } = postData;
     const [showMore, setShowMore] = useState(false);
 
-    let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
-    injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
-    have mercy on everyOne  and grant the dEceased a high plAce in Jannat-ul-FirdOus. 🤲 `
+    // let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
+    // injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
+    // have mercy on everyOne  and grant the dEceased a high plAce in Jannat-ul-FirdOus. 🤲 `
 
     const toggleShowMore = () => {
         setShowMore(!showMore);
@@ -31,11 +32,22 @@ const PostCard = () => {
                 <div className={styles.cardHeader}> {/* Card Header */}
                     <div className={styles.userData}>
                         <img className={styles.profileImg} src={profImg} alt="profileImg" />
+
                         <div>
                             <b>Ruhama Malik </b>
-                            <p>14 August . <img src={publicIcon} alt="Public" width="12px" height="11px" /></p>
+                            <p>14 August . {
+                                status === 'Public' ? (
+                                    <img src={publicIcon} alt="Public" width="12px" height="11px" />
+                                ) : status === 'Private' ? (
+                                    <i className="fa-solid fa-lock"></i>
+                                ) : status === 'Friends' ? (
+                                    <i class="fa-solid fa-user-group"></i>
+                                ) : null}
+                            </p>
                         </div>
+
                     </div>
+                    
                     <svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" className="x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0 xlup9mm x1kky2od"><circle cx="12" cy="12" r="2.5"></circle><circle cx="19.5" cy="12" r="2.5"></circle><circle cx="4.5" cy="12" r="2.5"></circle></svg>
                 </div>
 
@@ -47,7 +59,7 @@ const PostCard = () => {
                         )}
                     </div>
                     <div className={styles.postImg}>
-                        <img src={profImg} alt="postImg" />
+                        <img src={image} alt="postImg" />
                     </div>
                 </div>
 

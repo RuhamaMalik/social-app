@@ -6,14 +6,14 @@
     display: none;
 }
 
-.homeBar p {
+.homeBar span {
     font-size: 1.8em;
     cursor: pointer;
 }
 
 .layout {
     width: 100%;
-    height: 100vh;
+    height:90vh;
     display: grid;
     grid-template-columns: 16em 2fr 19em;
 
