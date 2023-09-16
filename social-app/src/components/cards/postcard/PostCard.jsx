@@ -24,6 +24,16 @@ const PostCard = ({ postData }) => {
             return description.slice(0, 196) + '...';
         }
     };
+
+    //////////////////// Drop Down
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsVisible(!isVisible);
+    };
+    const handleOptionClick = () => {
+        setIsVisible(false);
+    };
     return (
         <>
 
@@ -47,8 +57,15 @@ const PostCard = ({ postData }) => {
                         </div>
 
                     </div>
-                    
-                    <svg fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" className="x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0 xlup9mm x1kky2od"><circle cx="12" cy="12" r="2.5"></circle><circle cx="19.5" cy="12" r="2.5"></circle><circle cx="4.5" cy="12" r="2.5"></circle></svg>
+                    <div className={styles.dropdown}>
+                        <svg onClick={toggleDropdown} fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" className={`x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0 xlup9mm x1kky2od `}><circle cx="12" cy="12" r="2.5"></circle><circle cx="19.5" cy="12" r="2.5"></circle><circle cx="4.5" cy="12" r="2.5"></circle></svg>
+                        {isVisible && (
+                            <div className={styles.dropdownContent}>
+                                <div onClick={()=>handleOptionClick()}>Edit </div>
+                                <div onClick={()=>handleOptionClick()}>Delete</div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className={styles.cardContent}> {/* Card Body/Content */}

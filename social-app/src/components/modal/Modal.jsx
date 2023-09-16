@@ -33,6 +33,7 @@ const Modal = ({ isOpen, onClose, onShake, onFormSubmit }) => {
         setDescription('');
         setImage(null);
         setStatus('Public');
+        onClose()
     };
     // console.log(formData);
     

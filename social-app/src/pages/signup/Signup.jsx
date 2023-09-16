@@ -2,7 +2,7 @@ import styles from './Signup.module.css';
 import signUp from '../../assets/images/signUp.svg';
 import defaultProfImg from '../../assets/images/user.jpg'
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const Signup = () => {
 
   const [fName, setFname] = useState('');
@@ -69,7 +69,7 @@ const Signup = () => {
               <img src={defaultProfImg} alt="" />
             </div>
             <button className={styles.btn1}>Upload</button>
-            <button className={styles.btn2}>Create Your Account</button>
+           <Link to='/home'> <button className={styles.btn2}>Create Your Account</button></Link>
 
           </div>
 
