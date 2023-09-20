@@ -5,9 +5,19 @@ import publicIcon from '../../../assets/images/public.png';
 import likeIcon from '../../../assets/images/likeIcon.png';
 import commentIcon from '../../../assets/images/commentIcon.png';
 import { useState } from 'react';
-const PostCard = ({ postData }) => {
+import Modal from './../../modal/Modal';
+import { useSelector } from 'react-redux';
+const PostCard = ({ postData, updatedPostData }) => {
+    const currentUser = useSelector((state) => {
+        return state.user
+      });
     const { description, image, status } = postData;
     const [showMore, setShowMore] = useState(false);
+    const [updatedpost, setUpdatedpost] = useState({
+        description: null,
+        status: null,
+        image: null,
+    })
 
     // let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
     // injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
@@ -31,22 +41,39 @@ const PostCard = ({ postData }) => {
     const toggleDropdown = () => {
         setIsVisible(!isVisible);
     };
-    const handleOptionClick = () => {
+    //////////////////////// Edit
+    const [dataToEdit, setDataToEdit] = useState('')
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOptionClick = (postData) => {
         setIsVisible(false);
+        setDataToEdit(postData);
+        setIsModalOpen(true);
+
     };
+    const updatePost = (postupdated) => {
+        setUpdatedpost(postupdated)
+        // console.log('check data' + JSON.stringify(postupdated));
+        updatedPostData(postupdated)
+    };
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <>
-
+            {/* <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} /> */}
+            {/* {console.log('key is' + postData)} */}
             <div className={styles.cardWrapper}>
 
                 <div className={styles.cardHeader}> {/* Card Header */}
                     <div className={styles.userData}>
-                        <img className={styles.profileImg} src={profImg} alt="profileImg" />
+                        <img className={styles.profileImg} src={currentUser.user.profileImage} alt="profileImg" />
 
                         <div>
-                            <b>Ruhama Malik </b>
+                            <b>{currentUser.user.username}</b>
                             <p>14 August . {
-                                status === 'Public' ? (
+                                (updatedpost.status || status) === 'Public' ? (
                                     <img src={publicIcon} alt="Public" width="12px" height="11px" />
                                 ) : status === 'Private' ? (
                                     <i className="fa-solid fa-lock"></i>
@@ -61,8 +88,7 @@ const PostCard = ({ postData }) => {
                         <svg onClick={toggleDropdown} fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" className={`x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0 xlup9mm x1kky2od `}><circle cx="12" cy="12" r="2.5"></circle><circle cx="19.5" cy="12" r="2.5"></circle><circle cx="4.5" cy="12" r="2.5"></circle></svg>
                         {isVisible && (
                             <div className={styles.dropdownContent}>
-                                <div onClick={()=>handleOptionClick()}>Edit </div>
-                                <div onClick={()=>handleOptionClick()}>Delete</div>
+                                <div onClick={() => handleOptionClick(postData)}>Edit </div>
                             </div>
                         )}
                     </div>
@@ -89,6 +115,7 @@ const PostCard = ({ postData }) => {
 
             </div>
 
+            <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} />
 
 
 

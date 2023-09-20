@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import './Modal.css';
 import profileImg from '../../assets/images/profile.jpg';
 import galleryIcon from '../../assets/images/gallery.png';
@@ -8,39 +9,36 @@ import gifIcon from '../../assets/images/gifIcon.png';
 import location from '../../assets/images/location.png';
 import defaultImg from '../../assets/images/defaultImg.png';
 
-const Modal = ({ isOpen, onClose, onShake, onFormSubmit }) => {
-    // Form Controll/Collect Data
+const Modal = ({ isOpen, onClose, onShake, onFormSubmit, dataToEdit }) => {
+    const currentUser = useSelector((state) => {
+        return state.user
+      });
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [status, setStatus] = useState('Public');
+    const [isVisible, setIsVisible] = useState(false);
+    const [uid, setUid] = useState(0)
+
+    useEffect(() => {  // Edit data Fetch
+        if (dataToEdit) {
+            setDescription(dataToEdit.description || '');
+            setImage(dataToEdit.image || null);
+            setStatus(dataToEdit.status || 'Public');
+            setUid(dataToEdit.postId || uid)
+        }
+    }, [dataToEdit]);
+
 
     const handleImageSelect = (event) => {
         const file = event.target.files[0];
-
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setImage(imageUrl);
+            // console.log('Image URL:', imageUrl);  // correct
         }
     };
 
-    const handleSubmit = (e) => {
-        const newPost = {
-            description,
-            image: image || defaultImg,
-            status,
-        };
-        //   console.log(newPost);
-        onFormSubmit(newPost);
-        setDescription('');
-        setImage(null);
-        setStatus('Public');
-        onClose()
-    };
-    // console.log(formData);
-    
-    const [status, setStatus] = useState('Public');// Drop Down
-    const [isVisible, setIsVisible] = useState(false);
-
-    const toggleDropdown = () => {
+    const toggleDropdown = () => { // Drop Down// status
         setIsVisible(!isVisible);
     };
 
@@ -48,6 +46,49 @@ const Modal = ({ isOpen, onClose, onShake, onFormSubmit }) => {
         setStatus(option);
         setIsVisible(false);
     };
+
+
+    /// form submit
+    // useEffect(() => {
+    //     console.log('updated ' + image);
+    // }, [image]);
+
+    console.log('-----------   ' + image );
+    
+    const handleSubmit = () => {
+        if (dataToEdit) {
+            const editPost = {
+                description,
+                image: image || dataToEdit.image, 
+                status,
+                postId: uid
+            };
+            // console.log('updated image: ' + image);
+          
+            // console.log('check' + JSON.stringify(editPost, 2, null));
+            onFormSubmit(editPost);
+            setDescription('');
+            // console.log('Image before reset:', image); 
+            setImage(null);
+            // console.log(image);
+
+            setStatus('Public');
+            onClose();
+        } else {
+            const newPost = {
+                description,
+                image: image || defaultImg,
+                status,
+                postId: uid
+            };
+            setUid(() => uid + 1)
+            onFormSubmit(newPost);
+            setDescription('');
+            setImage(null);
+            setStatus('Public');
+            onClose()
+        };
+    }
 
     return (
         // <div className={`modal ${isOpen ? 'open' : ''}`} onClick={onShake}>
@@ -59,9 +100,9 @@ const Modal = ({ isOpen, onClose, onShake, onFormSubmit }) => {
                 <div className='modalHeader'>
                     <h2>Add <span className='text-success'>Post</span></h2>
                     <div className='info'>
-                        <img src={profileImg} alt="profileImg" />
+                        <img src={currentUser.user.profileImage} alt="profileImg" />
                         <div className='userName'>
-                            <b> Ruhama Malik </b>
+                            <b>{currentUser.user.username} </b>
                             <span className="dropdown" onClick={toggleDropdown}>
                                 {status} &#x25BC;
                                 {isVisible && (
@@ -88,7 +129,7 @@ const Modal = ({ isOpen, onClose, onShake, onFormSubmit }) => {
                     <img src={gifIcon} alt="gif Icon" />
                 </div>
 
-                <button type="submit" onClick={handleSubmit}>Create</button>
+                <button type="submit" onClick={handleSubmit}>{dataToEdit? 'Update': 'Create'}</button>
 
             </div>
         </div>
