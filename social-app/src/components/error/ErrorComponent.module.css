@@ -1,0 +1,27 @@
+.errorContainer {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+.error{
+  width: 70%;
+  height: 70%;
+  background: #d6d3d3;
+  display: grid;
+  padding: 0 2em;
+  align-items: center;
+}
+
+button:hover{
+filter:grayscale(40%);
+}
+
+@media (max-width : 690px){
+.error{
+  width: 96%;
+
+}
+}

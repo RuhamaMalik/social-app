@@ -7,17 +7,17 @@ import commentIcon from '../../../assets/images/commentIcon.png';
 import { useState } from 'react';
 import Modal from './../../modal/Modal';
 import { useSelector } from 'react-redux';
-const PostCard = ({ postData, updatedPostData }) => {
-    const currentUser = useSelector((state) => {
-        return state.user
-      });
-    const { description, image, status } = postData;
+const PostCard = ({ postData, updatedPostData, username, profileImage }) => {
+    // const currentUser = useSelector((state) => {
+    //     return state.user
+    //   });
+    const { description,timestamp, imageUrl, status, likes, comments, id } = postData;
     const [showMore, setShowMore] = useState(false);
-    const [updatedpost, setUpdatedpost] = useState({
-        description: null,
-        status: null,
-        image: null,
-    })
+    // const [updatedpost, setUpdatedpost] = useState({
+    //     description: null,
+    //     status: null,
+    //     image: null,
+    // })
 
     // let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
     // injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
@@ -51,11 +51,11 @@ const PostCard = ({ postData, updatedPostData }) => {
         setIsModalOpen(true);
 
     };
-    const updatePost = (postupdated) => {
-        setUpdatedpost(postupdated)
-        // console.log('check data' + JSON.stringify(postupdated));
-        updatedPostData(postupdated)
-    };
+    // const updatePost = (postupdated) => {
+    //     setUpdatedpost(postupdated)
+    //     // console.log('check data' + JSON.stringify(postupdated));
+    //     updatedPostData(postupdated)
+    // };
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -68,12 +68,13 @@ const PostCard = ({ postData, updatedPostData }) => {
 
                 <div className={styles.cardHeader}> {/* Card Header */}
                     <div className={styles.userData}>
-                        <img className={styles.profileImg} src={currentUser.user.profileImage} alt="profileImg" />
+                        <img className={styles.profileImg} src={profileImage} alt="profileImg" />
 
                         <div>
-                            <b>{currentUser.user.username}</b>
-                            <p>14 August . {
-                                (updatedpost.status || status) === 'Public' ? (
+                            <b>{username}</b>
+                            <p>{timestamp} . {
+                                // (updatedpost.status || status) === 'Public' ? (
+                                status === 'Public' ? (
                                     <img src={publicIcon} alt="Public" width="12px" height="11px" />
                                 ) : status === 'Private' ? (
                                     <i className="fa-solid fa-lock"></i>
@@ -102,7 +103,7 @@ const PostCard = ({ postData, updatedPostData }) => {
                         )}
                     </div>
                     <div className={styles.postImg}>
-                        <img src={image} alt="postImg" />
+                        <img src={imageUrl} alt="postImg" />
                     </div>
                 </div>
 
@@ -115,7 +116,7 @@ const PostCard = ({ postData, updatedPostData }) => {
 
             </div>
 
-            <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} />
+            {/* <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} /> */}
 
 
 

@@ -44,6 +44,7 @@
     height: 3em;
     width: 3em;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .modal-content {
@@ -137,30 +138,3 @@ textarea {
 
 }
 
-/* In your CSS file (e.g., Modal.css) */
-@keyframes shake {
-    0% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-5px);
-    }
-
-    50% {
-        transform: translateX(5px);
-    }
-
-    75% {
-        transform: translateX(-5px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
-/* Apply the 'shake' animation to the modal element when needed */
-.modal.shake {
-    animation: shake 0.5s;
-}

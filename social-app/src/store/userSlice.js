@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
+        allUsers: null,
         user: null,
         isAuthenticated: false,
+
     },
     reducers: {
         setUser: (state, action) => {
@@ -16,8 +19,13 @@ const userSlice = createSlice({
             state.user = null;
             state.isAuthenticated = false;
         },
+        setAllUser: (state, action) => {
+            state.allUsers = action.payload;
+        },
+
     },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, setAllUser } = userSlice.actions;
+// export const allUsers = (state) => state.useSelector.allUsers;
 export default userSlice.reducer;
