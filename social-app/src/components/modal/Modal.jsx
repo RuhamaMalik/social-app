@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { setAllUser, setUser } from '../../store/userSlice';
 import './Modal.css';
-// import profileImg from '../../assets/images/profile.jpg';
 import galleryIcon from '../../assets/images/gallery.png';
 import happyEmojiIcon from '../../assets/images/happyEmojiIcon.png';
 import userTag from '../../assets/images/userTag.png';
 import gifIcon from '../../assets/images/gifIcon.png';
 import location from '../../assets/images/location.png';
 import defaultImg from '../../assets/images/defaultImg.png';
-import { setAllUser, setUser } from '../../store/userSlice';
 
-// const Modal = ({ isOpen, onClose, onShake, onFormSubmit, dataToEdit }) => {
-const Modal = ({ isOpen, onClose}) => {
-const dispatch = useDispatch();
+const Modal = ({ isOpen, onClose, dataToEdit }) => {
+    const dispatch = useDispatch();
     const currentUser = useSelector((state) => {
         return state.user.user
     });
@@ -22,28 +20,33 @@ const dispatch = useDispatch();
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState(null);
     const [status, setStatus] = useState('Public');
-    const [isVisible, setIsVisible] = useState(false);
-    const [id, setId] = useState(0)
-    const [timestamp, setTimestamp] = useState(null);
+    const [pid, setPId] = useState(Math.random().toString(36).substring(2))
+    const [timestamp, setTimestamp] = useState("");
     const [comments, setComments] = useState("");
     const [likes, setLikes] = useState("");
+    const [userId, setuserId] = useState(currentUser.userId)
+    const [isVisible, setIsVisible] = useState(false);
 
-    // useEffect(() => {  // Edit data Fetch
-    //     if (dataToEdit) {
-    //         setDescription(dataToEdit.description || '');
-    //         setImage(dataToEdit.image || null);
-    //         setStatus(dataToEdit.status || 'Public');
-    //         setUid(dataToEdit.postId || uid)
-    //     }
-    // }, [dataToEdit]);
 
+    useEffect(() => {  // Edit data Fetch
+        if (dataToEdit) {
+            setDescription(dataToEdit.description || '');
+            setImageUrl(dataToEdit.imageUrl || null);
+            setStatus(dataToEdit.status || 'Public');
+            setPId(dataToEdit.id || pid);
+            setTimestamp(dataToEdit.timestamp);
+            setComments(dataToEdit.comments);
+            setLikes(dataToEdit.likes);
+
+        }
+    }, [dataToEdit]);
 
     const handleImageSelect = (event) => {
         const file = event.target.files[0];
         if (file) {
             const image = URL.createObjectURL(file);
             setImageUrl(image);
-            // console.log('Image URL:', imageUrl);  // correct
+            console.log('Image URL:', imageUrl);  // correct
         }
     };
 
@@ -51,73 +54,58 @@ const dispatch = useDispatch();
         setIsVisible(!isVisible);
     };
 
-    const handleOptionClick = (option) => {
+    const dropDownOption = (option) => {
         setStatus(option);
         setIsVisible(false);
     };
 
 
-
-
-
-    // if (dataToEdit) {
-    //     const editPost = {
-    //         description,
-    //         image: image || dataToEdit.image, 
-    //         status,
-    //         postId: uid
-    //     };
-    //     // console.log('updated image: ' + image);
-
-    //     // console.log('check' + JSON.stringify(editPost, 2, null));
-    //     onFormSubmit(editPost);
-    //     setDescription('');
-    //     // console.log('Image before reset:', image); 
-    //     setImage(null);
-    //     // console.log(image);
-
-    //     setStatus('Public');
-    //     onClose();
-    // } else {
-    // const newPost = {
-    //     description,
-    //     image: image || defaultImg,
-    //     status,
-    //     postId: uid
-    // };
-    // setUid(() => uid + 1)
-    // // onFormSubmit(newPost);
-    // setDescription('');
-    // setImage(null);
-    // setStatus('Public');
-    // onClose()
-    // };
-    function formatTimestampToDayMonth(timestamp) {  // TIMEsTAMP
-        const date = new Date(timestamp);
-        const options = { day: 'numeric', month: 'short', };
-        return new Intl.DateTimeFormat('en-US', options).format(date);
-    }
-    const timestamps = Date.now();
-    const formattedDate = formatTimestampToDayMonth(timestamps);
-    const addNewPost = (newPost) => {
-        const updatedCurrentUser = {
-          ...currentUser,
-          posts: [...currentUser.posts, newPost],
-        };
-      
-        const userIndex = allUsers.findIndex((user) => user.userId === currentUser.userId);
-        const updatedAllUsers = [...allUsers];
-        updatedAllUsers[userIndex] = updatedCurrentUser;
-      console.log(updatedAllUsers);
-        dispatch(setUser(updatedCurrentUser));
-        dispatch(setAllUser(updatedAllUsers));
-      };
-      
-    const handleSubmit = () => { //  collect form data
+    useEffect(() => {// TIMEsTAMP
+        function formatTimestampToDayMonth(currentDate) {
+            const date = new Date(currentDate);
+            const options = { day: 'numeric', month: 'short', };
+            return new Intl.DateTimeFormat('en-US', options).format(date);
+        }
+        const currentDate = Date.now();
+        const formattedDate = formatTimestampToDayMonth(currentDate);
         setTimestamp(formattedDate);
+
+    }, [])
+
+    // post
+    const updatePost = (Post) => {
+        if (dataToEdit) {
+            const prePost = currentUser.posts.find((post) => post.id === dataToEdit.id);
+            const oldPosts = currentUser.posts.filter((post) => post.id !== dataToEdit.id);
+            const updatedCurrentUser = {
+                ...currentUser,
+                posts: [...oldPosts, Post],
+            };
+
+            dispatch(setUser(updatedCurrentUser));
+            const remainingUsers = allUsers.filter((user) => user.userId !== currentUser.userId);
+            const updatedUsers = [...remainingUsers, updatedCurrentUser];
+            dispatch(setAllUser(updatedUsers))
+        } else {
+            const updatedCurrentUser = {
+                ...currentUser,
+                posts: [...currentUser.posts, Post],
+            };
+            dispatch(setUser(updatedCurrentUser));
+
+            const remainingUsers = allUsers.filter((user) => user.userId !== currentUser.userId);
+            const updatedUsers = [...remainingUsers, updatedCurrentUser];
+            dispatch(setAllUser(updatedUsers))
+        }
+
+
+
+    };
+
+    const handleSubmit = () => { //  collect form data
         const post = {
-            userId: currentUser.userId,
-            id: Math.random().toString(36).substring(2),
+            userId,
+            id: pid,
             imageUrl: imageUrl || defaultImg,
             description,
             likes,
@@ -125,9 +113,9 @@ const dispatch = useDispatch();
             status,
             timestamp,
         }
-        addNewPost(post)
-        setId(''); setDescription(''); setStatus('Public'); setImageUrl(null);
-         onClose();
+        updatePost(post)
+        setPId(''); setDescription(''); setStatus('Public'); setImageUrl(null); setTimestamp(null)
+        onClose();
     }
 
 
@@ -136,7 +124,6 @@ const dispatch = useDispatch();
 
 
     return (
-        // <div className={`modal ${isOpen ? 'open' : ''}`} onClick={onShake}>
         <div className={`addPostmodal ${isOpen ? 'open' : ''}`} >
 
             <div className="modal-content">
@@ -152,9 +139,9 @@ const dispatch = useDispatch();
                                 {status} &#x25BC;
                                 {isVisible && (
                                     <div className="dropdown-content">
-                                        <div onClick={() => handleOptionClick('Public')}>Public</div>
-                                        <div onClick={() => handleOptionClick('Private')}>Private</div>
-                                        <div onClick={() => handleOptionClick('Friends')}>Friends</div>
+                                        <div onClick={() => dropDownOption('Public')}>Public</div>
+                                        <div onClick={() => dropDownOption('Private')}>Private</div>
+                                        <div onClick={() => dropDownOption('Friends')}>Friends</div>
                                     </div>
                                 )}
                             </span>
@@ -173,9 +160,7 @@ const dispatch = useDispatch();
                     <img src={userTag} alt="usrTag component" />
                     <img src={gifIcon} alt="gif Icon" />
                 </div>
-                <button type="submit" onClick={handleSubmit}> Create</button>
-
-                {/* <button type="submit" onClick={handleSubmit}>{dataToEdit? 'Update': 'Create'}</button> */}
+                <button type="submit" onClick={handleSubmit}>{dataToEdit ? 'Update' : 'Create'}</button>
 
             </div>
         </div>

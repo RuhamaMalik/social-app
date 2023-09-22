@@ -5,7 +5,8 @@
     position: relative;
 }
 
-.profileCover>img , .profileImg>img {
+.profileCover>img,
+.profileImg>img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -52,9 +53,11 @@
     cursor: pointer;
 
 }
-.center{
+
+.center {
     text-align: center;
 }
+
 .addPost {
     margin-top: 2em;
     padding: .6em 1em;
@@ -85,7 +88,36 @@
     object-fit: cover;
 }
 
-.posts{
+.details {
+    width: 90%;
+    height: 12em;
+    border: 1px solid rgba(221, 160, 221, 0.293);
+    margin: 0 auto;
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    position: relative;
+    padding: .5em 0;
+}
+
+.details b {
+    padding-left: 30%;
+}
+.infoshow{
+    color: plum;
+    cursor: pointer;
+}
+.info{
+    color: plum;
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    cursor: pointer;
+    /* margin-left: 4em; */
+}
+
+.posts {
     /* margin-top: 2em; */
     padding: .6em 1em;
     border-radius: 5px;
@@ -104,9 +136,16 @@
         margin: -5em auto 0 auto;
 
     }
-    .addPost{
+
+    .addPost {
         width: 90%;
         font-size: .8em;
     }
-
+    .details{
+        width: 98% ;
+    }
+    .details b {
+        padding-left: 10%;
+    }
+    
 }

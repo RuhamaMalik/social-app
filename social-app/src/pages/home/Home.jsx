@@ -1,55 +1,38 @@
 import styles from './Home.module.css';
-import { useRef, useState } from 'react';
-import { useSearchParams, NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams, NavLink} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import { clearUser} from '../../store/userSlice';
 import Header from '../../components/header/Header';
 import PostCard from '../../components/cards/postcard/PostCard';
-// import profileImg from '../../assets/images/profile.jpg';
 import Modal from '../../components/modal/Modal';
-import { clearUser, allUsers } from '../../store/userSlice';
 import Profile from '../profile/Profile';
-import { selectAllPosts } from '../../store/postsSlice';
+
 const Home = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [allPosts, setAllPosts] = useState([]);
+
   const currentUser = useSelector((state) => { // current user
-    return state.user
+    return state.user.user
   });
   const allUsersData = useSelector((state) => { // all user
     return state.user.allUsers
   })
-  const allPosts = [];
-  allUsersData.map((user, index) => { // all posts
-    user.posts.map((post, index) => {
-      allPosts.push({
-        post: post,
-        profileImage: user.profileImage,
-        username: user.username,
+
+  useEffect(() => {
+    const newAllPosts = [];
+
+    allUsersData.forEach((user) => {
+      user.posts.forEach((post) => {
+        newAllPosts.push({
+          post: post,
+          profileImage: user.profileImage,
+          username: user.username,
+        });
       });
-    })
-  })
-
-  // console.log(allPosts);
-  // const [posts, setPosts] = useState([]); //postData
-  // const addPost = (newPost) => { //create post
-  //   setPosts([...posts, newPost]);
-  // };
-
-  // const updatedPost = (updatedpost) => {
-  //   // console.log('home :' + JSON.stringify(updatedpost));
-  //   const indexToUpdate = posts.findIndex((post) => post.postId === updatedpost.postId);
-  //   // console.log(indexToUpdate);
-  //   if (indexToUpdate !== -1) {
-  //     const updatedPosts = [...posts];
-  //     // console.log(updatedpost);
-  //     updatedPosts[indexToUpdate] = updatedpost;
-  //     // console.log(updatedPosts);
-  //     setPosts(updatedPosts);
-  //     // console.log(updatedpost.image);
-  //   }
-  // }
-
-  // console.log( 'All posts Array' +  posts);
+    });
+    setAllPosts(newAllPosts);
+  }, [allUsersData, currentUser]);
 
   // set Side Tabs content
   const [searchParams, setSearchParams] = useSearchParams();
@@ -83,6 +66,8 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
+
+  // logout
 
   const logout = () => {
     window.location = '/';
@@ -121,24 +106,18 @@ const Home = () => {
               <>
                 <div className={styles.addPost}>
                   <div className={styles.textField} onClick={handleOpenModal} >
-                    <img src={currentUser.user.profileImage} alt="profileImg" />
+                    <img src={currentUser.profileImage} alt="profileImg" />
                     <div>What's on your mind?</div>
                   </div>
-                  {/* <Modal onFormSubmit={addPost} isOpen={isModalOpen} onClose={handleCloseModal} onShake={handleModalShake} /> */}
-                  <Modal isOpen={isModalOpen} onClose={handleCloseModal}  />
+                  
+                  <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
 
                 </div>
-                {/* {posts.map((post, index) => (
-                  // <PostCard key={index} postData={post} updatedPostData={updatedPost} />
-
-               ))} */}
                 {allPosts.map((post, index) => (
                   <PostCard key={index} postData={post.post} username={post.username} profileImage={post.profileImage} />
 
                 ))}
-                {/* <PostCard />
-                <PostCard />
-                <PostCard /> */}
+                
               </>
             ) : currentTab === "1" ? (
               <><h1>Friends</h1></>

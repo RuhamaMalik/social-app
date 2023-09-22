@@ -7,22 +7,31 @@ import ErrorComponent from "./components/error/ErrorComponent";
 import { usersData } from "./userData";
 import { setAllUser } from "./store/userSlice";
 import { addPost } from "./store/postsSlice";
-
-const allUsersPosts = [];
-usersData.map((user, index) => {
-  user.posts.map((post, index) => {
-    allUsersPosts.push(post)
-  });
-});
+import { useEffect, useState } from "react";
 
 
 function App() {
+
   const dispatch = useDispatch(); // store all users
-  dispatch(setAllUser(usersData));
-dispatch(addPost(allUsersPosts))
   const currentUser = useSelector((state => { //extract current user
     return state.user
   }))
+
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    // const allUsersPosts = [];
+    // usersData.map((user, index) => {
+    //   user.posts.map((post, index) => {
+    //     allUsersPosts.push(post)
+    //   });
+    // });
+    // setPosts(allUsersPosts)
+    dispatch(setAllUser(usersData));
+    // dispatch(addPost(posts))
+
+  }, [])
+
 
 
   return (

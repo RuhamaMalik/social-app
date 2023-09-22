@@ -1,29 +1,21 @@
 import styles from './postcard.module.css';
-import profImg from '../../../assets/images/profile.jpg';
 import shareIcon from '../../../assets/images/shareIcon.png';
 import publicIcon from '../../../assets/images/public.png';
 import likeIcon from '../../../assets/images/likeIcon.png';
 import commentIcon from '../../../assets/images/commentIcon.png';
 import { useState } from 'react';
 import Modal from './../../modal/Modal';
-import { useSelector } from 'react-redux';
-const PostCard = ({ postData, updatedPostData, username, profileImage }) => {
-    // const currentUser = useSelector((state) => {
-    //     return state.user
-    //   });
-    const { description,timestamp, imageUrl, status, likes, comments, id } = postData;
+
+const PostCard = ({ postData, username, profileImage }) => {
+
+    const { description, timestamp, imageUrl, status, likes, comments, id , userId } = postData;
     const [showMore, setShowMore] = useState(false);
-    // const [updatedpost, setUpdatedpost] = useState({
-    //     description: null,
-    //     status: null,
-    //     image: null,
-    // })
 
     // let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
     // injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
     // have mercy on everyOne  and grant the dEceased a high plAce in Jannat-ul-FirdOus. 🤲 `
 
-    const toggleShowMore = () => {
+    const toggleShowMore = () => { // show Discription
         setShowMore(!showMore);
     };
 
@@ -51,19 +43,14 @@ const PostCard = ({ postData, updatedPostData, username, profileImage }) => {
         setIsModalOpen(true);
 
     };
-    // const updatePost = (postupdated) => {
-    //     setUpdatedpost(postupdated)
-    //     // console.log('check data' + JSON.stringify(postupdated));
-    //     updatedPostData(postupdated)
-    // };
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
     return (
         <>
-            {/* <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} /> */}
-            {/* {console.log('key is' + postData)} */}
+            <Modal dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} />
+
             <div className={styles.cardWrapper}>
 
                 <div className={styles.cardHeader}> {/* Card Header */}
@@ -73,7 +60,6 @@ const PostCard = ({ postData, updatedPostData, username, profileImage }) => {
                         <div>
                             <b>{username}</b>
                             <p>{timestamp} . {
-                                // (updatedpost.status || status) === 'Public' ? (
                                 status === 'Public' ? (
                                     <img src={publicIcon} alt="Public" width="12px" height="11px" />
                                 ) : status === 'Private' ? (
@@ -115,11 +101,6 @@ const PostCard = ({ postData, updatedPostData, username, profileImage }) => {
                 </div>
 
             </div>
-
-            {/* <Modal onFormSubmit={updatePost} dataToEdit={dataToEdit} isOpen={isModalOpen} onClose={handleCloseModal} /> */}
-
-
-
 
         </>
     )
