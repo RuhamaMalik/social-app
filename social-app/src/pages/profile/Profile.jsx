@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import PostCard from '../../components/cards/postcard/PostCard';
 import styles from './Profile.module.css';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import Modal from '../../components/modal/Modal';
 
 
@@ -33,24 +33,26 @@ const Profile = () => {
                     {/* <p> 📷</p> */}
                 </div>
 
-                <div className={styles.center}>
+                <div className={styles.userDetails}>
                     <h3> {currentUser.username} </h3>
                     <p>{currentUser.bio}</p>
-                    <span className={styles.infoshow} onClick={()=>setShowDetails(true)}>show more...</span>
-                </div>
 
-                {showDetails && <><div className={styles.details}>
-                    <b>Contact:</b>  <span>{currentUser.mobileNumber}</span>
-                    <b>Email:</b>  <span>{currentUser.email}</span>
-                    <b>Followers:</b> <span>{currentUser.followers}</span>
-                    <b>Following:</b> <span>{currentUser.following}</span>
-                    <span className={styles.info}> show less</span>
-
+                    {showDetails && <>
+                        <div className={styles.details}>
+                            <b>Contact:</b>  <span>{currentUser.mobileNumber}</span>
+                            <b>Email:</b>  <span>{currentUser.email}</span>
+                            <b>Followers:</b> <span>{currentUser.followers}</span>
+                            <b>Following:</b> <span>{currentUser.following}</span>
+                            <b> Location :</b> <span>Lives in {currentUser.location}</span>
+                        </div>
+                        <div className={styles.editProfileBtn}><span>Edit profile ✎</span></div>
+                    </>
+                    }
+                    <div className={styles.info}><span onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'show less' : 'show more'}</span>...</div>
                 </div>
-                </>
-                }
 
             </div>
+
             <div className={styles.addPost}>
                 <div className={styles.textField} onClick={handleOpenModal} >
                     <img src={currentUser.profileImage} alt="profileImg" />
@@ -60,6 +62,7 @@ const Profile = () => {
             </div>
             <div className={styles.posts}>
                 {currentUser.posts.map((post, index) => (
+
                     <PostCard key={index} postData={post} username={currentUser.username} profileImage={currentUser.profileImage} />
                 ))}
             </div>

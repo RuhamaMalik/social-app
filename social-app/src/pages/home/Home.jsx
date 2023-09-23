@@ -1,21 +1,22 @@
 import styles from './Home.module.css';
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams, NavLink} from "react-router-dom";
+import { useSearchParams, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { clearUser} from '../../store/userSlice';
+import { clearUser } from '../../store/userSlice';
 import Header from '../../components/header/Header';
 import PostCard from '../../components/cards/postcard/PostCard';
 import Modal from '../../components/modal/Modal';
 import Profile from '../profile/Profile';
+import PhotoGallery from './../photos/PhotoGallery';
 
 const Home = () => {
   const dispatch = useDispatch();
   const [allPosts, setAllPosts] = useState([]);
 
-  const currentUser = useSelector((state) => { // current user
+  const currentUser = useSelector((state) => { // get current user
     return state.user.user
   });
-  const allUsersData = useSelector((state) => { // all user
+  const allUsersData = useSelector((state) => { // get all user
     return state.user.allUsers
   })
 
@@ -109,7 +110,7 @@ const Home = () => {
                     <img src={currentUser.profileImage} alt="profileImg" />
                     <div>What's on your mind?</div>
                   </div>
-                  
+
                   <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
 
                 </div>
@@ -117,12 +118,15 @@ const Home = () => {
                   <PostCard key={index} postData={post.post} username={post.username} profileImage={post.profileImage} />
 
                 ))}
-                
+
               </>
             ) : currentTab === "1" ? (
               <><h1>Friends</h1></>
             ) : currentTab === "2" ? (
-              <><h1>Photos</h1></>
+              <>
+                {/* {  navigate('/photos')} */}
+                <PhotoGallery />
+              </>
             ) : currentTab === "3" ? (
               <><h1>Videos</h1></>
             ) : currentTab === "4" ? (

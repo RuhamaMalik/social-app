@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { usersData } from "./userData";
+import { setAllUser } from "./store/userSlice";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import Signup from './pages/signup/Signup';
 import SignIn from './pages/signIn/SignIn';
 import Home from "./pages/home/Home";
-import { useSelector, useDispatch } from 'react-redux';
 import ErrorComponent from "./components/error/ErrorComponent";
-import { usersData } from "./userData";
-import { setAllUser } from "./store/userSlice";
-import { addPost } from "./store/postsSlice";
-import { useEffect, useState } from "react";
-
+import PhotoGallery from "./pages/photos/PhotoGallery";
 
 function App() {
 
@@ -17,22 +16,9 @@ function App() {
     return state.user
   }))
 
-  const [posts, setPosts] = useState(null);
-
   useEffect(() => {
-    // const allUsersPosts = [];
-    // usersData.map((user, index) => {
-    //   user.posts.map((post, index) => {
-    //     allUsersPosts.push(post)
-    //   });
-    // });
-    // setPosts(allUsersPosts)
     dispatch(setAllUser(usersData));
-    // dispatch(addPost(posts))
-
   }, [])
-
-
 
   return (
     <>    <BrowserRouter >
@@ -43,6 +29,17 @@ function App() {
         {currentUser.isAuthenticated &&
           <>
             <Route path='/home' element={<Home />} />
+            <Route path="/photos" element={<PhotoGallery />} />
+
+            {/*<Route path="photos" element={<PhotoGallery />}>
+                <Route path="allphotos" element={<AllPhotos />} />
+                <Route path="albums" element={<Albums />}>
+                  <Route path="coverphotos" element={<CoverPhotos />} />
+                  <Route path="postimages" element={<PostImages />} />
+                  <Route path="profileimages" element={<ProfileImages />} />
+                </Route>
+              </Route> */}
+
           </>
         }
         <Route path='*' element={<ErrorComponent errorMsg="Oops, you're not authenticated! 😅" />

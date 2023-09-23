@@ -1,0 +1,110 @@
+.PhotoGallery {
+    display: grid;
+    width: 100%;
+grid-template-rows: 6em auto;
+}
+
+.galleryItems{
+    height: calc(100%-6em);
+    overflow-y: scroll;
+}
+.tabs {
+    display: flex;
+    align-items: center;
+    grid-area: 1/1/2/-1;
+    justify-content: space-around;
+    height: 5em;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    color: rgb(72, 150, 75);
+}
+
+.tabs p {
+    font-size: 1.5em;
+    cursor: pointer;
+
+}
+
+.tabs p:hover {
+    border-bottom: 1px solid rgb(72, 150, 75);
+    ;
+
+}
+.active{
+    border-bottom: 1px solid #777;
+}
+/* AllPhotos.jsx */
+.all{
+   
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(2, 1fr);
+    
+}
+
+
+/* Album.jsx */
+
+/* Folder Tile Styles */
+.albumTile {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .albumTile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Folder Icon Styles */
+  .folderIcon {
+    width: 64px;
+    height: 64px;
+    margin-right: 16px;
+    background-color: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+  
+  .folderIcon img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  /* Folder Details Styles */
+  .folderDetails {
+    flex: 1;
+  }
+  
+  .folderName {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+  }
+  
+  .folderDescription {
+    font-size: 14px;
+    color: #777;
+    margin: 4px 0;
+  }
+  
+  /* Media Query for Smaller Screens */
+  @media (max-width: 768px) {
+    .albumTile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .folderIcon {
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+  }
+  

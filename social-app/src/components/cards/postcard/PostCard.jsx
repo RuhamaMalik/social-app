@@ -7,10 +7,9 @@ import { useState } from 'react';
 import Modal from './../../modal/Modal';
 
 const PostCard = ({ postData, username, profileImage }) => {
-
-    const { description, timestamp, imageUrl, status, likes, comments, id , userId } = postData;
+    const { description, timestamp, imageUrl, status, likes, comments, id, userId } = postData;
     const [showMore, setShowMore] = useState(false);
-
+   
     // let description = `A pOwerful earthQuake hit Turkey🇹🇷 and Syria🇸🇾  , killing at least 4000 peOple and 
     // injuring thOusands acrOss both countries. May Allah help and pRotect thOse who aRe effected and 
     // have mercy on everyOne  and grant the dEceased a high plAce in Jannat-ul-FirdOus. 🤲 `
